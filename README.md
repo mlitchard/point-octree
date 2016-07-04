@@ -2,7 +2,7 @@ point-octree
 ======
 This is a fork of Michał J Gajda's [Octree](https://github.com/BioHaskell/octree) library, with bounding boxes.
 
-[![Build Status](https://api.travis-ci.org/mlitchard/point-octree.png?branch=master)](https://www.travis-ci.org/mlitchard/point-octree)
+[![Build Status](https://travis-ci.org/mlitchard/point-octree.svg?branch=master)](https://www.travis-ci.org/mlitchard/point-octree)
 
 (From Michal's README.md) 
 To use simply:
