@@ -34,10 +34,11 @@ import Data.Octree.BoundingBox.Internal ( DefInput
 --   The root Bounding Box
 bbis :: BBox3
 bbis =
-  let infinity = (read "Infinity") :: Double
-      swdCorner = Vector3 (-infinity) (-infinity) (-infinity)
-      neuCorner = Vector3 (infinity) (infinity) (infinity)
-  in bound_corners swdCorner neuCorner
+  bound_corners swdCorner neuCorner
+  where
+    infinity = read "Infinity" :: Double
+    swdCorner = Vector3 (-infinity) (-infinity) (-infinity)
+    neuCorner = Vector3 (infinity) (infinity) (infinity)
 
 isBBox :: BBox3 -> Bool
 isBBox (BBox3 minX minY minZ maxX maxY maxZ) =

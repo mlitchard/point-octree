@@ -96,10 +96,7 @@ newBBox3 bbx split' NEU =
 -- | filterNodes is default function for BBoxConfig 
 --   used to recurse down octree identifying which BBox3s contain DefInput
 filterNodes :: BBox3 -> DefInput -> Maybe DefInput
-filterNodes bbox x = 
-  case (within_bounds x bbox) of
-    True  -> Just x
-    False -> Nothing
+filterNodes bbox x = if within_bounds x bbox then Just x else Nothing
 
 -- | points is default function for BBoxConfig
 -- pre-processes Leaf
@@ -113,13 +110,13 @@ result _ (x:xs) = foldl' findTerminal x xs
   where
     findTerminal :: DefOutput -> DefOutput -> DefOutput
     findTerminal bbox1@(bbox1',_) bbox2@(bbox2',_)
-      | (inclusive bbox1' bbox2') == True = bbox1
-      | otherwise                         = bbox2
+      | inclusive bbox1' bbox2' = bbox1
+      | otherwise               = bbox2
 
 -- | Supplied boolean test for result function
 --   Returns True if Box b1 is contained within Box b2
 inclusive :: BBox3 -> BBox3 -> Bool
 inclusive b1 b2 =
-  case (isect b1 b2) of
+  case isect b1 b2 of
     Just b3 -> b1 == b3
     Nothing -> False

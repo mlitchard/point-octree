@@ -26,11 +26,11 @@ import Data.Octree.BoundingBox.Internal
 -- | BBoxConfig - The functions traverseOctreeBB needs
 data BBoxConfig x y a = BBoxConfig {
 -- | A function to recurse down the Octree
-  select   :: (BBox3 -> x -> Maybe x),
+  select   :: BBox3 -> x -> Maybe x,
 -- | A function to pre-condition the leaves
-  procLeaf :: (BBox3 -> x -> [LeafValue a] -> y),
+  procLeaf :: BBox3 -> x -> [LeafValue a] -> y,
 -- | A function to recurse back up the tree
-  combine  :: (x -> [y] -> y)
+  combine  :: x -> [y] -> y
 }
 
 -- | defBBoxConfig - default BBoxConfig
@@ -58,7 +58,7 @@ traverseOctreeBB
     select'  = select bbc
 
     traverseOctreeBB' (subbox, subtree) =
-      case (select' subbox x) of
+      case select' subbox x of
         Just x' -> Just (traverseOctreeBB bbc subbox subtree x)
         Nothing -> Nothing 
 

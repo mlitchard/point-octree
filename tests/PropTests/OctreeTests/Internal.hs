@@ -57,8 +57,8 @@ prop_stepDescription a b =
   splitStep (cmp a b) == (v3x a >= v3x b, v3y a >= v3y b, v3z a >= v3z b)
 
 prop_octantDistanceNoGreaterThanInterpointDistance0 ptA ptB = triangleInequality
-  where triangleInequality = 
-    octantDistance' aptA (cmp ptB origin) <= dist aptA ptB
+  where 
+    triangleInequality = octantDistance' aptA (cmp ptB origin) <= dist aptA ptB
     aptA                   = abs ptA
 
 prop_octantDistanceNoGreaterThanInterpointDistance ptA ptB vp = 

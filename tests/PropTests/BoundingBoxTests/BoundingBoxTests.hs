@@ -29,16 +29,15 @@ import PropTests.BoundingBoxTests.Utilities
 import Data.Octree.BoundingBox.Internal (DefInput, DefOutput, DefNodeValue)
 
 propValidateBoxes :: Spec
-propValidateBoxes = do
+propValidateBoxes = 
   describe "prop_validateBoxes" $
-    prop propMsg                $
-    prop_validateBoxes
+    prop propMsg prop_validateBoxes               
   where
     propMsg =
       "Testing that arbitarily generated bounding boxes are well-formed."
 
 propMatchValuesToBoxes :: Spec
-propMatchValuesToBoxes = do
+propMatchValuesToBoxes =
   describe "prop_matchValuesToBox"                $
     prop propMsg                                  $
     prop_matchValuesToBox testConfig1 testConfig2
@@ -53,7 +52,7 @@ prop_validateBoxes :: [(Vector3, Int)] -> Bool
 prop_validateBoxes l = 
   let octree' = fromList l
       bbxs    = map fst $ traverseOctreeBB testConfig1 bbis octree' (Vector3 0 0 0)
-  in notElem False $ map isBBox bbxs
+  in and $ map isBBox bbxs
 
 type TestConfigOne = BBoxConfig DefInput [DefOutput] DefNodeValue
 type TestConfigTwo = BBoxConfig AltInput DefOutput DefNodeValue
@@ -66,8 +65,8 @@ prop_matchValuesToBox :: TestConfigOne       ->
 prop_matchValuesToBox config1 config2 l =
   let octree'  = fromList l
       boxCol1  = traverseOctreeBB config1 bbis octree' x
-      x        = (Vector3 0 0 0) -- this is never used but needs to be present
+      x        = Vector3 0 0 0 -- this is never used but needs to be present
       xs'      = map fst boxCol1
       boxCol2  = map (traverseOctreeBB config2 bbis octree') xs'
-      validate = map (flip elem boxCol1) boxCol2
-  in notElem False validate 
+      validate = map (`elem` boxCol1) boxCol2
+  in and validate 
