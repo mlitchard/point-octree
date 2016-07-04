@@ -52,7 +52,7 @@ prop_validateBoxes :: [(Vector3, Int)] -> Bool
 prop_validateBoxes l = 
   let octree' = fromList l
       bbxs    = map fst $ traverseOctreeBB testConfig1 bbis octree' (Vector3 0 0 0)
-  in and $ map isBBox bbxs
+  in all isBBox bbxs
 
 type TestConfigOne = BBoxConfig DefInput [DefOutput] DefNodeValue
 type TestConfigTwo = BBoxConfig AltInput DefOutput DefNodeValue

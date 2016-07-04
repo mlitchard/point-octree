@@ -57,7 +57,7 @@ prop_naiveWithinRange r l pt =
   naiveWithinRange r pt l == testPoints
   where
     testPoints = 
-      (sort . map fst . (\o -> withinRange o r pt) . fromList . tuplify pt $ l)
+      sort . map fst . (\o -> withinRange o r pt) . fromList . tuplify pt $ l
 
 tuplify pt = map (\a -> (a, dist pt a))
 
@@ -73,13 +73,13 @@ naiveWithinRange r pt = sort . filter withinRange
 -- unfortunately there is no Arbitrary for (a -> b)
 -- since generic properties are quite common, I wonder how to force Quickcheck to default something reasonable?
 prop_fmap1,prop_fmap2 :: [(Vector3, Int)] -> Bool
-prop_fmap1 = genericProperty_fmap (+1)
-prop_fmap2 = genericProperty_fmap (*2)
-prop_fmap3 = genericProperty_fmap (show :: Int -> String)
+prop_fmap1 = genericPropertyFmap (+1)
+prop_fmap2 = genericPropertyFmap (*2)
+prop_fmap3 = genericPropertyFmap (show :: Int -> String)
 
-genericProperty_fmap f l = 
+genericPropertyFmap f l = 
   (sort . map (Control.Arrow.second f) $ l) == fmapTest
-  where fmapTest =(sort . toList . fmap f . fromList $ l)
+  where fmapTest = sort . toList . fmap f . fromList $ l
 
 prop_depth_empty = depth (Leaf []) == 0
 

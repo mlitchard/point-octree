@@ -38,7 +38,7 @@ bbis =
   where
     infinity = read "Infinity" :: Double
     swdCorner = Vector3 (-infinity) (-infinity) (-infinity)
-    neuCorner = Vector3 (infinity) (infinity) (infinity)
+    neuCorner = Vector3 infinity infinity infinity
 
 isBBox :: BBox3 -> Bool
 isBBox (BBox3 minX minY minZ maxX maxY maxZ) =
@@ -58,11 +58,11 @@ allBoxesAndKeys :: BBox3                     ->
                    [DefOutput]
 allBoxesAndKeys bbx x leaf = [(bbx, leaf)]
 
-allPoints :: BBox3 -> DefInput -> Maybe (DefInput)
-allPoints bbx x = Just x
+allPoints :: BBox3 -> DefInput -> Maybe DefInput
+allPoints bbx = Just
 
 assemble :: DefInput -> [[DefOutput]] -> [DefOutput]
-assemble _ ys = concat ys
+assemble _ = concat
 
 type AltInput = BBox3
 
@@ -74,10 +74,8 @@ testConfig2 = BBoxConfig {
 }
 
 filterBoxes :: BBox3 -> AltInput -> Maybe AltInput
-filterBoxes genBox origBox =
-  case (inclusive origBox genBox) of
-    True  -> Just origBox
-    False -> Nothing
+filterBoxes genBox origBox = 
+  if inclusive origBox genBox then Just origBox else Nothing
 
 checkbox :: BBox3 -> AltInput -> [LeafValue DefNodeValue ] -> DefOutput
 checkbox genBox _ leaf = (genBox, leaf)

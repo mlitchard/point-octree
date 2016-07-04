@@ -1,4 +1,4 @@
-octree/Data/Octree/BoundingBox.hs
+point-octree/Data/Octree/BoundingBox
 ==============================
 BoundingBox.hs provides a generalized traversal function, that traverses
 an `Octree a` based on a BBox3 value.
